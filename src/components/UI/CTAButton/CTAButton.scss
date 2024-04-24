@@ -1,0 +1,43 @@
+@use "../../../styles/partials/variables.scss" as *;
+@use "../../../styles/partials/mixin.scss" as *;
+
+.cta-button__hero {
+    cursor: pointer;
+    border-radius: $border-radius;
+    border: none;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    height: 2.25rem;
+    justify-content: center;
+    font-weight: 600;
+    line-height: 1.375rem;
+    font-style: normal;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+
+    @include tablet {
+        width: auto;
+        font-size: 0.875rem;
+        height: 2.375rem;
+    }
+}
+
+.cta-button {
+    &__hero{
+        background-color: #f4efdb;
+        color: black;
+        width: 20rem;
+        padding: 1rem 2rem;
+        height: 3.125rem;
+        
+        @include tablet {
+            &:hover {
+                background-color: olivedrab;
+                }
+        }
+
+    }
+}

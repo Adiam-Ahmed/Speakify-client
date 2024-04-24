@@ -1,0 +1,31 @@
+@use "../../styles/partials/global.scss" as *;
+@use "../../styles/partials/mixin.scss" as *;
+@use "../../styles/partials/variables.scss" as *;
+
+.header{
+    color: white;
+    background-color: #0C0C0C;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    &__container{
+        display: flex;
+        align-items: center;
+
+    }
+    &__icon{
+        height: 5rem;
+    }
+    &__logo{
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+        cursor: pointer;
+    }
+    &__profile-icon{
+        cursor: pointer;
+    }
+}
+  
+
+
