@@ -1,8 +1,12 @@
+import Header from "./components/Header/Header";
+import '../src/styles/partials/global.scss';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <Header />
+
     </div>
   );
 }

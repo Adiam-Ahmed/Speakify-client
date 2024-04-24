@@ -18,7 +18,7 @@ html,
 body {
     position: relative;
     font-family: "Roboto Mono", sans-serif;
-    background-color: $color-light-gray;
+    background-color:black;
 
     @include tablet {
         min-height: 64rem;

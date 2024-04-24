@@ -1,0 +1,20 @@
+@use "../../styles/partials/global.scss" as *;
+@use "../../styles/partials/mixin.scss" as *;
+@use "../../styles/partials/variables.scss" as *;
+
+.header{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    &__container{
+        display: flex;
+        align-items: center;
+    }&__logo{
+        font-size: 2rem;
+        padding-bottom: 1rem;
+    }
+  
+}
+
