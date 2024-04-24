@@ -7,7 +7,6 @@ const FeatureCard = () => {
         <div className='feature-container'>
             <h1>Features </h1>
             <Card  />
-
         </div>
     );
 };
