@@ -4,6 +4,7 @@
 
 .header{
     color: white;
+    background-color: #0C0C0C;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,10 +12,20 @@
     &__container{
         display: flex;
         align-items: center;
-    }&__logo{
-        font-size: 2rem;
-        padding-bottom: 1rem;
+
     }
-  
+    &__icon{
+        height: 5rem;
+    }
+    &__logo{
+        font-size: 1.5rem;
+        padding-bottom: 1rem;
+        cursor: pointer;
+    }
+    &__profile-icon{
+        cursor: pointer;
+    }
 }
+  
+
 

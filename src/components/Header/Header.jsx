@@ -15,8 +15,11 @@ const Header = () => {
                 />
                 <h3 className='header__logo'>SPEAKIFY</h3>
             </div>
+            <div className='header__profile-icon'>
+                <PersonOutlinedIcon sx={{ fontSize: 60 }} />
+            </div>
 
-            <PersonOutlinedIcon sx={{ fontSize: 80 }} />
+            
 
         </header>
     );
