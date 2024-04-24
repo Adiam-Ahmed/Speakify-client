@@ -12,13 +12,14 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    // border: 1px solid red;
 }
 
 html,
 body {
     position: relative;
     font-family: "Roboto Mono", sans-serif;
-    background-color:black;
+    
 
     @include tablet {
         min-height: 64rem;
