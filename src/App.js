@@ -4,6 +4,7 @@ import './App.scss';
 // import FeatureCard from "./components/FeatureCard/FeatureCard";
 // import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
+import Register from './components/Register/Register';
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <FeatureCard />
       <Footer /> */}
       <Login />
+      <Register />
       
 
     </div>
