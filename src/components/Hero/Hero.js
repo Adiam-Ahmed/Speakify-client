@@ -12,7 +12,7 @@ const Hero = () => {
                 <p class="hero-banner__details">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit onsectetur adipiscing elit onsectetur adipiscing elit.
                 </p>
-                <CTAButton className="button-add" text="Get Started" type="hero" />
+                <CTAButton className="button-add" text="Get Started" btnType="hero" />
             </div>
             <div className="hero-banner__layer layer2"></div>
         </section>
