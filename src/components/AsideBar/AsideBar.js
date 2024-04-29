@@ -12,7 +12,6 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 
-
 const AsideBar = () => {
     const [state, setState] = React.useState({
         left: false,
