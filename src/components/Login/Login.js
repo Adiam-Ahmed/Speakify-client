@@ -1,12 +1,30 @@
 import './Login.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CTAButton from '../UI/CTAButton/CTAButton';
+import {GoogleLogin, GoogleLogout} from 'react-google-login'
+import {gapi} from "gapi-script";
 
 
+const clientId = process.env.ClientID 
 
 const Login = () => {
+
+    useEffect(() => {
+        function start() {
+            gapi.client.init({
+                clientId: clientId,
+                scope: ""
+            });
+        }
+        gapi.load('client:auth2', start);
+    }, []);
+
+    var accessToken = gapi.auth.getToken().access_token;
+    console.log(accessToken)
+
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -18,6 +36,19 @@ const Login = () => {
         e.preventDefault()
 
     }
+
+    const onSuccess = (res)=>{
+        console.log("Login Sucess Current user", res.profileObj)
+    }
+
+    const onFailure = (res) =>{
+        console.log('Login failed! res:', res)
+    }
+
+    const onSuccessLogout = (res) => {
+        console.log("Login Sucess Current user", res.profileObj)
+    }
+
 
     return (
         <section className='login'>
@@ -55,7 +86,25 @@ const Login = () => {
                     <CTAButton className="button-add" text="Login" btnType="hero" onClick={handleLogin} />
                 </div>
             </form>
-            <p>No account? Sign Up here</p>
+            <p>No account? Sign Up here or using Google Account</p>
+            <div className='sign-in-google'>
+            <GoogleLogin 
+                clientId= {clientId}
+                buttonText='Login'
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn= {true}
+            />
+            </div>
+            <div className='sign-out'>
+                <GoogleLogout
+                    clientId={clientId}
+                    buttonText={'Logout'}
+                    onSuccess={onSuccessLogout}
+                />
+            </div>
+            
         </section>
     )
 }
