@@ -4,25 +4,62 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CTAButton from '../UI/CTAButton/CTAButton';
 import { GoogleLogin } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
 
 
 const Login = () => {
+
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
-
-   
     const handleUsernameChange = (e) => setUsername(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+    const handleLogin = async e => {
+        e.preventDefault()
 
-        setLoading(false);
-    };
+        try {
+            const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
 
+            if (loginRes.status === 200) {
+                console.log('Auth Token: ', loginRes.data.token);
+
+                // If the login is successful, store the returned token in localStorage
+                localStorage.setItem('authToken', loginRes.data.token)
+
+                // Then redirect to profile page
+                navigate('/profile')
+            } else {
+                navigate('/login')
+            }
+        } catch (err) {
+            navigate('/login')
+        }
+
+    }
+
+    const handleGoogleLoginSuccess = async credentialResponse => {
+        try {
+            const googleSignInRes = await axios.get(`${SERVER_URL}/auth/google`, {
+                credentialResponse
+            });
+
+            if (googleSignInRes.status === 201) {
+                navigate('/profile')
+            }
+        } catch (err) {
+            console.log("Error: ", err);
+        }
+    }
+
+    const handleGoogleLoginError = () => {
+        console.log('Login Failed');
+    }
 
     return (
         <section className="login">
@@ -61,21 +98,16 @@ const Login = () => {
                 <div className="login__container">
                     <CTAButton
                         className="button-add"
-                        text={loading ? 'Logging in...' : 'Login'}
+                        text={'Login'}
                         btnType="hero"
-                        disabled={loading}
                     />
                 </div>
             </form>
-            <p>No account? Sign Up here or login using Google Account</p>
+            <p>No account? Sign Up <Link to='/signup'>here</Link> or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        console.log(credentialResponse);
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={handleGoogleLoginError}
                 />
             </div>
         </section>

@@ -6,26 +6,64 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { GoogleLogin } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 const Register = () => {
 
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
-
+    const navigate = useNavigate()
 
 
     const handleUsernameChange = e => setUsername(e.target.value)
+    const onNameChange = e => setName(e.target.value)
     const handlePasswordChange = e => setEmail(e.target.value)
     const handleEmailChange = e => setPassword(e.target.value)
     const handleConfirmPasswordChange = e => setconfirmPassword(e.target.value)
 
-    const handlesignup = async e => {
+    const handleSignup = async e => {
         e.preventDefault()
 
+        try {
+            const signUpRes = await axios.post(`${SERVER_URL}/auth/signup`, {
+                email,
+                username,
+                name,
+                password
+            });
+
+            if (signUpRes.status === 201) {
+                navigate('/login')
+            }
+        } catch (err) {
+            console.log("Error: ", err);
+        }
     }
+    const handleGoogleLoginSuccess = async credentialResponse => {
+        try {
+            const googleSignInRes = await axios.get(`${SERVER_URL}/auth/google`, {
+                credentialResponse
+            });
+
+            if (googleSignInRes.status === 201) {
+                navigate('/profile')
+            }
+        } catch (err) {
+            console.log("Error: ", err);
+        }
+    }
+
+    const handleGoogleLoginError = () => {
+        console.log('Login Failed');
+    }
+
+
     return (
         <section className='signup'>
             <h1 className='signup__header'> User Sign Up</h1>
@@ -41,6 +79,20 @@ const Register = () => {
                             placeholder='Username'
                             value={username}
                             onChange={handleUsernameChange}
+                        />
+                    </label>
+                </div>
+                <div className='signup__container'>
+                    <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
+                    <label htmlFor="name" className='signup__box'>
+                        <input
+                            className='signup__input'
+                            type="text"
+                            id="name"
+                            name='name'
+                            placeholder='Name'
+                            value={name}
+                            onChange={onNameChange}
                         />
                     </label>
                 </div>
@@ -87,17 +139,13 @@ const Register = () => {
                     </label>
                 </div>
                 <div className='signup__container'>
-                    <CTAButton className="button-add" text="signup" btnType="hero" onClick={handlesignup} />
+                    <CTAButton className="button-add" text="signup" btnType="hero" onClick={handleSignup} />
                 </div>
             </form>
-            <p>Already have Account? Login in here or Sign up using Google</p>
+            <p>Already have Account? Login in <Link to='/login'>here</Link> or Sign up using Google</p>
             <GoogleLogin
-                onSuccess={credentialResponse => {
-                    console.log(credentialResponse);
-                }}
-                onError={() => {
-                    console.log('Login Failed');
-                }}
+                onSuccess={handleGoogleLoginSuccess}
+                onError = { handleGoogleLoginError }
             />
         </section>
     )

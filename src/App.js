@@ -1,25 +1,27 @@
 import './App.scss';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from "./components/Header/Header";
-import Hero from "./components/Hero/Hero";
-import FeatureCard from "./components/FeatureCard/FeatureCard";
+import LandingPage from './pages/LandingPage/LandingPage';
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
 import Register from './components/Register/Register';
+import Profile from './components/Profile/Profile';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
-
-
+const clientId = process.env.REACT_APP_ClientID;
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter>
       <Header />
-      <Hero />
-      <FeatureCard />
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login /></GoogleOAuthProvider>} />
+        <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register /></GoogleOAuthProvider>} />
+        <Route path='/profile' element={<Profile />} />
+      </Routes>
       <Footer />
-      <Login />
-
-      <Register />
-    </div>
+    </BrowserRouter>
   )
 }
 
