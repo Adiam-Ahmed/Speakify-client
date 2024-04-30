@@ -5,6 +5,7 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { GoogleLogin } from '@react-oauth/google';
 
 
 const Register = () => {
@@ -89,7 +90,15 @@ const Register = () => {
                     <CTAButton className="button-add" text="signup" btnType="hero" onClick={handlesignup} />
                 </div>
             </form>
-            <p>Already have Account? Login in here</p>
+            <p>Already have Account? Login in here or Sign up using Google</p>
+            <GoogleLogin
+                onSuccess={credentialResponse => {
+                    console.log(credentialResponse);
+                }}
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+            />
         </section>
     )
 };

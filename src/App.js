@@ -17,12 +17,10 @@ function App() {
       <FeatureCard />
       <Footer />
       <Login />
-      <Register />
- 
-      
 
+      <Register />
     </div>
-  );
+  )
 }
 
 export default App;

@@ -1,53 +1,28 @@
 import './Login.scss'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CTAButton from '../UI/CTAButton/CTAButton';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { gapi } from 'gapi-script';
+import { GoogleLogin } from '@react-oauth/google';
 
-const clientId = process.env.REACT_APP_ClientID;
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
 
-    useEffect(() => {
-        async function start() {
-            await gapi.auth2.init({
-                clientId: clientId,
-                scope: ''
-            });
-        }
-        gapi.load('client:auth2', start);
-    }, []);
 
+   
     const handleUsernameChange = (e) => setUsername(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // Validate username and password
-        // Perform login action
-        // Example: send login request to server
+
         setLoading(false);
     };
 
-    const onSuccess = (res) => {
-        console.log('Login Success. Current user:', res.profileObj);
-    };
-
-    const onFailure = (res) => {
-        console.error('Login failed. Error:', res.error);
-        setError('Login failed. Please try again.');
-    };
-
-    const onSuccessLogout = (res) => {
-        console.log('Logout Success. Current user:', res.profileObj);
-    };
 
     return (
         <section className="login">
@@ -92,29 +67,19 @@ const Login = () => {
                     />
                 </div>
             </form>
-            {error && <p className="error">{error}</p>}
-            <p>No account? Sign Up here or using Google Account</p>
+            <p>No account? Sign Up here or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Login with Google"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy="single_host_origin"
-                    isSignedIn={true}
-                    disabled={loading}
-                />
-            </div>
-            <div className="sign-out">
-                <GoogleLogout
-                    clientId={clientId}
-                    buttonText="Logout"
-                    onLogoutSuccess={onSuccessLogout}
-                    disabled={loading}
+                    onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
                 />
             </div>
         </section>
-    );
+    )
 };
 
 export default Login;
