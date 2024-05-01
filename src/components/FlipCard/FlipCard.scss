@@ -1,0 +1,60 @@
+.cards-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 80%;
+    aspect-ratio: 16 /9;
+    position: relative;
+    perspective: 3200px;
+    margin: 10px;
+    padding: 20px;
+    background-color: wheat;
+    &__front-side,
+    &__back-side {
+        overflow: hidden;
+        background-color: whitesmoke;
+        height: 90%;
+        width: 95%;
+        backface-visibility: hidden;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__back-side {
+        transform: rotateX(-180deg);
+    }
+
+}
+.col-3{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.active .card__front-side {
+    transform: rotateX(180deg);
+}
+
+.active .card__back-side {
+    transform: rotateX(0);
+}
+
+.toggle-btn {
+    height: 48px;
+    aspect-ratio: 1;
+    position: absolute;
+    bottom: 5rem;
+    right: 5rem;
+    border: none;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+.placeholder {
+    width: 10rem;
+}

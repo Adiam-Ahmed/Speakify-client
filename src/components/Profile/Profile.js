@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import FlipCard from '../FlipCard/FlipCard';
+
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const Profile = () => {
@@ -46,6 +48,7 @@ const Profile = () => {
     return (
         <>
             <h1>Welcome {userInfo.username}!</h1>
+            <FlipCard />
             <Link to="/" onClick={handleLogout}>
                 Logout
             </Link>
