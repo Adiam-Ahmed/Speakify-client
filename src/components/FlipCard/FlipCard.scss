@@ -5,13 +5,21 @@
 }
 
 .card {
-    width: 80%;
+    width: 30rem;
+    height: 35rem;
     aspect-ratio: 16 /9;
     position: relative;
-    perspective: 3200px;
-    margin: 10px;
-    padding: 20px;
+    margin: .625rem;
+    padding: 1.25rem;
     background-color: wheat;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    perspective: 1000px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &__front-side,
     &__back-side {
         overflow: hidden;
@@ -25,16 +33,23 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        align-items: center;
     }
     &__back-side {
         transform: rotateX(-180deg);
     }
 
 }
+.col-2{
+    display: flex;
+    flex-direction: column;
+    padding: .9375rem;
+}
 .col-3{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    gap: .9375rem; 
 }
 .active .card__front-side {
     transform: rotateX(180deg);
@@ -48,8 +63,8 @@
     height: 48px;
     aspect-ratio: 1;
     position: absolute;
-    bottom: 5rem;
-    right: 5rem;
+    bottom: 0.5rem;
+    right: 2rem;
     border: none;
     border-radius: 50%;
     z-index: 999;
