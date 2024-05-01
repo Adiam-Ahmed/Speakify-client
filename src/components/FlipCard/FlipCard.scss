@@ -1,0 +1,75 @@
+.cards-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 30rem;
+    height: 35rem;
+    aspect-ratio: 16 /9;
+    position: relative;
+    margin: .625rem;
+    padding: 1.25rem;
+    background-color: wheat;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    perspective: 1000px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__front-side,
+    &__back-side {
+        overflow: hidden;
+        background-color: whitesmoke;
+        height: 90%;
+        width: 95%;
+        backface-visibility: hidden;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__back-side {
+        transform: rotateX(-180deg);
+    }
+
+}
+.col-2{
+    display: flex;
+    flex-direction: column;
+    padding: .9375rem;
+}
+.col-3{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: .9375rem; 
+}
+.active .card__front-side {
+    transform: rotateX(180deg);
+}
+
+.active .card__back-side {
+    transform: rotateX(0);
+}
+
+.toggle-btn {
+    height: 48px;
+    aspect-ratio: 1;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 2rem;
+    border: none;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+.placeholder {
+    width: 10rem;
+}
