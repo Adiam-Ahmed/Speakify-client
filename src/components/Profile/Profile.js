@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import FlipCard from '../FlipCard/FlipCard';
+// import FlipCard from '../FlipCard/FlipCard';
+
+import Main from '../Main/Main';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -20,7 +22,7 @@ const Profile = () => {
                 });
 
                 if (getProfRes.status === 200) {
-                    console.log('Profile Data: ', getProfRes.data);
+                    // console.log('Profile Data: ', getProfRes.data);
                     setUserInfo(getProfRes.data);
                     setIsLoading(false);
                 } else {
@@ -48,7 +50,8 @@ const Profile = () => {
     return (
         <>
             <h1>Welcome {userInfo.username}!</h1>
-            <FlipCard />
+            {/* <FlipCard /> */}
+            <Main userId={userInfo.id} />
             <Link to="/" onClick={handleLogout}>
                 Logout
             </Link>
