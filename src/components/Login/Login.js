@@ -12,7 +12,7 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const Login = () => {
 
-    
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -56,7 +56,7 @@ const Login = () => {
 
                 // Then redirect to profile page
                 navigate('/profile')
-            } 
+            }
         } catch (error) {
             console.error('Error sending data to backend:', error);
         }
@@ -64,7 +64,7 @@ const Login = () => {
 
 
     return (
-        <section className="login">
+        <section className="login glass">
             <h1 className="login__header">User Login</h1>
             <form onSubmit={handleLogin}>
                 <div className="login__container">
@@ -105,7 +105,7 @@ const Login = () => {
                     />
                 </div>
             </form>
-            <p>No account? Sign Up <Link to='/signup'>here</Link> or login using Google Account</p>
+            <p className='login__paragraph'>No account? Sign Up <span className='login__bold-primary'><Link to='/signup'>here</Link></span> or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
                     onSuccess={handleGoogleSignUp}
