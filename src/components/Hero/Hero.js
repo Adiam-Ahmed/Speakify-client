@@ -1,6 +1,8 @@
 import React from 'react';
 import './Hero.scss'
 import CTAButton from '../UI/CTAButton/CTAButton';
+import HeroImage from '../../assests/images/HeroArt-Photoroom.png-Photoroom.png'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
     return (
@@ -12,9 +14,10 @@ const Hero = () => {
                 <p className="hero-banner__details">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit onsectetur adipiscing elit onsectetur adipiscing elit.
                 </p>
-                <CTAButton className="button-add" text="Get Started" btnType="hero" />
+                <Link to='/signup'><CTAButton className="button-add" text="Get Started" btnType="hero" /></Link>
             </div>
-            <div className="hero-banner__layer layer2"></div>
+            <img className="hero-banner__image"src= {HeroImage} alt= "hero banner about discovering your mind" />
+
         </section>
     );
 };
