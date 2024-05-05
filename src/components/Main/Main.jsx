@@ -8,6 +8,8 @@ const URL_BASE = process.env.REACT_APP_SERVER_URL;
 
 const Main = ({ userId }) => {
 
+    console.log(userId)
+
     const [userInput, setUserInput] = useState('');
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
@@ -23,7 +25,7 @@ const Main = ({ userId }) => {
         const fetchBooksList = async () => {
             setIsFetching(true);
             try {
-                const response = await axios.get(`${URL_BASE}/profile/book`);
+                const response = await axios.get(`${URL_BASE}/profile/book/${userId}`);
                 setBooksList(response.data);
             } catch (err) {
                 console.log('Cannot get book data');
