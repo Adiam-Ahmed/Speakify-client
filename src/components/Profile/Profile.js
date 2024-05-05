@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-// import FlipCard from '../FlipCard/FlipCard';
+
 
 import Main from '../Main/Main';
 
@@ -20,6 +20,7 @@ const Profile = () => {
                         Authorization: `Bearer ${authToken}`
                     }
                 });
+                
 
                 if (getProfRes.status === 200) {
                     // console.log('Profile Data: ', getProfRes.data);
@@ -40,6 +41,8 @@ const Profile = () => {
         }
     }, []);
 
+    
+
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         navigate('/login');
@@ -50,7 +53,6 @@ const Profile = () => {
     return (
         <>
             <h1>Welcome {userInfo.username}!</h1>
-            {/* <FlipCard /> */}
             <Main userId={userInfo.id} />
             <Link to="/" onClick={handleLogout}>
                 Logout
