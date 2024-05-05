@@ -1,12 +1,15 @@
-.cards-wrapper {
+.flip-card-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+     
 }
 
-.card {
-    width: 30rem;
-    height: 35rem;
+.flip-card {
+    width: 50vw;
+    height: 25rem;
     aspect-ratio: 16 /9;
     position: relative;
     margin: .625rem;
@@ -51,11 +54,11 @@
     align-items: center;
     gap: .9375rem; 
 }
-.active .card__front-side {
+.active .flip-card__front-side {
     transform: rotateX(180deg);
 }
 
-.active .card__back-side {
+.active .flip-card__back-side {
     transform: rotateX(0);
 }
 

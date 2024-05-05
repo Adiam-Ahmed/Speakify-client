@@ -43,23 +43,25 @@ const Login = () => {
 
     }
 
-    const handleGoogleLoginSuccess = async credentialResponse => {
+    const handleGoogleSignUp = async (credentialResponse) => {
         try {
-            const googleSignInRes = await axios.get(`${SERVER_URL}/auth/google`, {
-                credentialResponse
-            });
+            const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
+            console.log(credentialResponse.credential)
 
-            if (googleSignInRes.status === 201) {
+            if (response.status === 200) {
+                console.log('Auth Token: ', response.credential);
+
+                // If the login is successful, store the returned token in localStorage
+                localStorage.setItem('authToken', response.data.token)
+
+                // Then redirect to profile page
                 navigate('/profile')
-            }
-        } catch (err) {
-            console.log("Error: ", err);
+            } 
+        } catch (error) {
+            console.error('Error sending data to backend:', error);
         }
-    }
+    };
 
-    const handleGoogleLoginError = () => {
-        console.log('Login Failed');
-    }
 
     return (
         <section className="login">
@@ -106,12 +108,15 @@ const Login = () => {
             <p>No account? Sign Up <Link to='/signup'>here</Link> or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
-                    onSuccess={handleGoogleLoginSuccess}
-                    onError={handleGoogleLoginError}
+                    onSuccess={handleGoogleSignUp}
+                    onError={() => {
+                        console.log('Login Failed')
+                    }}
+                    cookiePolicy={'single_host_origin'}
                 />
             </div>
         </section>
     )
-};
+}
 
 export default Login;

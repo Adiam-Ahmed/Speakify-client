@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '../UI/Drawer';
@@ -11,11 +11,35 @@ const Main = ({ userId }) => {
     const [userInput, setUserInput] = useState('');
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
+    const [booksListData, setBooksList] = useState([]);
+    const [isFetching, setIsFetching] = useState(true);
 
 
     const generateUniqueId = () => {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }; 
+
+    useEffect(() => {
+        const fetchBooksList = async () => {
+            setIsFetching(true);
+            try {
+                const response = await axios.get(`${URL_BASE}/profile/book`);
+                setBooksList(response.data);
+            } catch (err) {
+                console.log('Cannot get book data');
+            }
+            setIsFetching(false);
+        }
+        fetchBooksList();
+    }, [botResponse])
+
+    // if fetching data, display loading message
+    if (isFetching) {
+        return (
+            <p>... Loading book data ...</p>
+        )
+    }
+
 
     const fetchBotResponse = async () => {
         try {
@@ -23,6 +47,7 @@ const Main = ({ userId }) => {
                 userInput: userInput.trim(),
                 userId: userId
             });
+            
 
 
             const responseData = response.data.botResponse
@@ -49,13 +74,15 @@ const Main = ({ userId }) => {
         }
     };
 
+    
+
     const handleSubmit = async () => {
         fetchBotResponse();
         setUserInput("")
     };
     return (
         <div>
-            <Drawer />
+            <Drawer booklist={booksListData}/>
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">What do you want to learn about today?</h2>
                 <div className="flex items-center w-full max-w-2xl">

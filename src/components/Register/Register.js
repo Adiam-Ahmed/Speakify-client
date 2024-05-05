@@ -23,8 +23,8 @@ const Register = () => {
 
     const handleUsernameChange = e => setUsername(e.target.value)
     const onNameChange = e => setName(e.target.value)
-    const handlePasswordChange = e => setEmail(e.target.value)
-    const handleEmailChange = e => setPassword(e.target.value)
+    const handlePasswordChange = e => setPassword(e.target.value)
+    const handleEmailChange = e => setEmail(e.target.value)
     const handleConfirmPasswordChange = e => setconfirmPassword(e.target.value)
 
     const handleSignup = async e => {
@@ -39,30 +39,38 @@ const Register = () => {
             });
 
             if (signUpRes.status === 201) {
-                navigate('/login')
+                const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
+
+                if (loginRes.status === 200) {
+                    console.log('Auth Token: ', loginRes.data.token);
+
+                    // If the login is successful, store the returned token in localStorage
+                    localStorage.setItem('authToken', loginRes.data.token)
+
+                    // Then redirect to profile page
+                    navigate('/profile')
+                } else {
+                    navigate('/login')
+                }
             }
         } catch (err) {
             console.log("Error: ", err);
         }
     }
-    const handleGoogleLoginSuccess = async credentialResponse => {
+
+
+    const handleGoogleSignUp = async (credentialResponse) => {
         try {
-            const googleSignInRes = await axios.get(`${SERVER_URL}/auth/google`, {
-                credentialResponse
-            });
+            const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
 
-            if (googleSignInRes.status === 201) {
+            if (response.status === 200) {
                 navigate('/profile')
+                console.log('Data sent to backend successfully');
             }
-        } catch (err) {
-            console.log("Error: ", err);
+        } catch (error) {
+            console.error('Error sending data to backend:', error);
         }
-    }
-
-    const handleGoogleLoginError = () => {
-        console.log('Login Failed');
-    }
-
+    };
 
     return (
         <section className='signup'>
@@ -144,8 +152,11 @@ const Register = () => {
             </form>
             <p>Already have Account? Login in <Link to='/login'>here</Link> or Sign up using Google</p>
             <GoogleLogin
-                onSuccess={handleGoogleLoginSuccess}
-                onError = { handleGoogleLoginError }
+                onSuccess={handleGoogleSignUp}
+                onError={() => {
+                    console.log('Login Failed')
+                }}
+                cookiePolicy={'single_host_origin'}
             />
         </section>
     )
