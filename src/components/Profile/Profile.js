@@ -1,10 +1,8 @@
+import './Profile.scss'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import axios from 'axios';
-
-
 import Main from '../Main/Main';
-
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const Profile = () => {
@@ -20,8 +18,6 @@ const Profile = () => {
                         Authorization: `Bearer ${authToken}`
                     }
                 });
-                
-
                 if (getProfRes.status === 200) {
                     // console.log('Profile Data: ', getProfRes.data);
                     setUserInfo(getProfRes.data);
@@ -31,9 +27,9 @@ const Profile = () => {
                 }
             } catch (err) {
                 handleLogout();
+
             }
         };
-
         const authToken = localStorage.getItem('authToken');
 
         if (authToken) {
@@ -51,13 +47,13 @@ const Profile = () => {
     if (isLoading) return <h1>Loading...</h1>
 
     return (
-        <>
-            <h1>Welcome {userInfo.username}!</h1>
+
+        <main className='main-container'>
+        
             <Main userId={userInfo.id} />
-            <Link to="/" onClick={handleLogout}>
-                Logout
-            </Link>
-        </>
+        </main>
+            
+
     )
 }
 

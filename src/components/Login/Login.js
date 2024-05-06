@@ -10,9 +10,8 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 
-const Login = () => {
 
-
+const Login = ({ handleLoginHeader }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -31,17 +30,22 @@ const Login = () => {
 
                 // If the login is successful, store the returned token in localStorage
                 localStorage.setItem('authToken', loginRes.data.token)
+                handleLoginHeader()
 
                 // Then redirect to profile page
                 navigate('/profile')
+                
             } else {
                 navigate('/login')
+                
             }
         } catch (err) {
             navigate('/login')
         }
 
     }
+
+    
 
     const handleGoogleSignUp = async (credentialResponse) => {
         try {
@@ -115,6 +119,8 @@ const Login = () => {
                     cookiePolicy={'single_host_origin'}
                 />
             </div>
+           
+
         </section>
     )
 }
