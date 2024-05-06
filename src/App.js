@@ -9,6 +9,7 @@ import Register from './components/Register/Register';
 import Profile from './components/Profile/Profile';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import BookPage from './pages/BookPage';
+import Speakify from './pages/Speakify';
 const clientId = process.env.REACT_APP_ClientID;
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader} /></GoogleOAuthProvider>} />
         <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register /></GoogleOAuthProvider>} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/profile/speakify' element={<Speakify />} />
         <Route path="/profile/book/:bookId" element={<BookPage />} />  
       </Routes>
       <Footer />

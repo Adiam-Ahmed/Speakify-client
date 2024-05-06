@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '../UI/Drawer';
-import MicIcon from '@mui/icons-material/Mic';
-
 const URL_BASE = process.env.REACT_APP_SERVER_URL;
 
 const Main = ({ userId }) => {
-
-    console.log(userId)
 
     const [userInput, setUserInput] = useState('');
     const [botResponse, setBotResponse] = useState('');
@@ -53,7 +49,6 @@ const Main = ({ userId }) => {
 
 
             const responseData = response.data.botResponse
-            console.log(responseData)
             setBotResponse(responseData);
             // Update user input immediately
             setChatData(prevChatData => [
@@ -70,7 +65,7 @@ const Main = ({ userId }) => {
                     ...prevChatData,
                     { id: generateUniqueId(), message: responseData, sender: "bot" }
                 ]);
-            }, 1000);
+            }, 300);
         } catch (error) {
             console.error('Error processing request:', error);
         }
@@ -96,13 +91,7 @@ const Main = ({ userId }) => {
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                         />
-                        <div
-                            className="absolute inset-y-0 right-2 flex items-center pr-3"
-                            style={{ cursor: 'pointer' }}
-                            onClick={handleSubmit}
-                        >
-                            <MicIcon style={{ pointerEvents: 'auto' }} />
-                        </div>
+                        
                     </div>
                     <div
                         className="ml-2"

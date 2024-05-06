@@ -1,5 +1,6 @@
 import React from 'react';
 import BookList from '../BookList/BookList'
+import { Link } from 'react-router-dom'
 
 const Drawer = ({ booklist }) => {
     return (
@@ -14,6 +15,7 @@ const Drawer = ({ booklist }) => {
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                         <BookList booklist={booklist} />
+                        <Link to={`/profile/speakify`}><li className='text-xl font-medium'>Speakify</li></Link>
                     </ul>
                 </div>
             </div>
