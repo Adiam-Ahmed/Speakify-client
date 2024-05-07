@@ -1,40 +1,35 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
 
 const SpeechToText = ({ onTranscriptUpdate }) => {
-    // console.log(onTranscriptUpdate)
-    const recognitionInstanceMain = useRef(new window.webkitSpeechRecognition());
-    const recognitionInstance = recognitionInstanceMain.current
-    recognitionInstance.continuous = true;
-    recognitionInstance.lang = 'en-US';
-    // const [transcript, setTranscript] = useState('');
+    const recognitionInstance = useRef(new window.webkitSpeechRecognition());
     const [isRecording, setIsRecording] = useState(false);
 
-    recognitionInstance.onresult = (event) => {
-        const interimTranscript = Array.from(event.results)
-            .map((result) => result[0].transcript)
-            .join('');
-        onTranscriptUpdate(interimTranscript);
-    };
-
+    useEffect(() => {
+        const recognition = recognitionInstance.current;
+        recognition.continuous = true;
+        recognition.lang = 'en-US';
+        recognition.onresult = (event) => {
+            const interimTranscript = Array.from(event.results)
+                .map((result) => result[0].transcript)
+                .join('');
+            onTranscriptUpdate(interimTranscript);
+        };
+        return () => {
+            recognition.stop();
+        };
+    }, [onTranscriptUpdate]);
 
     const startRecording = () => {
-        recognitionInstance.continuous = true;
-        onTranscriptUpdate('');
+        recognitionInstance.current.start();
         setIsRecording(true);
-        recognitionInstance.start();
     };
 
     const stopRecording = () => {
-        console.log('i clicked')
-        recognitionInstance.continuous = false;
-        recognitionInstance.abort()
+        recognitionInstance.current.stop();
         setIsRecording(false);
-        recognitionInstance.stop();
     };
-
-  
 
     return (
         <div>
