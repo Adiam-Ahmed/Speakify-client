@@ -24,7 +24,7 @@ To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository:
    ```sh
-    https://github.com/Adiam-Ahmed/speakify-server
+    https://github.com/Adiam-Ahmed/speakify-client
 
 2. Cd into the project directory 
 
