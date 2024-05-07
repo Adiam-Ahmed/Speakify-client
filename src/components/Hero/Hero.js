@@ -12,7 +12,7 @@ const Hero = () => {
                     Learn through Conversation
                 </h2>
                 <p className="hero-banner__details">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit onsectetur adipiscing elit onsectetur adipiscing elit.
+                    In a conversation, ideas are exchanged, perspectives are shared, and questions are raised, fostering a deeper understanding of the topic at hand.
                 </p>
                 <Link to='/signup'><CTAButton className="button-add" text="Get Started" btnType="hero" /></Link>
             </div>

@@ -1,5 +1,5 @@
 import './App.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from "./components/Header/Header";
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -14,26 +14,42 @@ const clientId = process.env.REACT_APP_ClientID;
 
 
 function App() {
-
+  const [theme, setTheme] = useState('light');
   const [loginTimestamp, setLoginTimestamp] = useState(null);
+
 
   const handleLoginHeader = () => {
     const newTimestamp = Date.now();
     setLoginTimestamp(newTimestamp);
   };
 
+  useEffect(() => {
+    const newThemeData = JSON.parse(localStorage.getItem('newThemeLocalStorage'))
+    if (newThemeData) {
+      setTheme(newThemeData)
+    }
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    const newTheme = theme === 'light' ? 'night' : 'light';
+    setTheme(newTheme);
+
+    localStorage.setItem('newThemeLocalStorage', JSON.stringify(newTheme))
+  };
   return (
     <BrowserRouter>
-      <Header loginTimestamp={loginTimestamp} />
-      <Routes>
-        <Route path='/' element={<LandingPage  />} />
-        <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader} /></GoogleOAuthProvider>} />
-        <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register /></GoogleOAuthProvider>} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/speakify' element={<SpeakifyPage />} />
-        <Route path="/profile/book/:bookId" element={<BookPage />} />  
-      </Routes>
-      <Footer />
+      <div data-theme={`${theme}`}>
+        <Header loginTimestamp={loginTimestamp} handleThemeToggle={handleThemeToggle} theme ={theme}/>
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader} /></GoogleOAuthProvider>} />
+          <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register /></GoogleOAuthProvider>} />
+          <Route path='/profile' element={< Profile />} />
+          <Route path='/profile/speakify' element={<SpeakifyPage />} />
+          <Route path="/profile/book/:bookId" element={<BookPage />} />
+        </Routes>
+        <Footer />
+      </div>
     </BrowserRouter>
   )
 }

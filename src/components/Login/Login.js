@@ -9,8 +9,6 @@ import axios from 'axios';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
-
-
 const Login = ({ handleLoginHeader }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,13 +24,8 @@ const Login = ({ handleLoginHeader }) => {
             const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
 
             if (loginRes.status === 200) {
-                console.log('Auth Token: ', loginRes.data.token);
-
-                // If the login is successful, store the returned token in localStorage
                 localStorage.setItem('authToken', loginRes.data.token)
                 handleLoginHeader()
-
-                // Then redirect to profile page
                 navigate('/profile')
                 
             } else {
@@ -45,20 +38,11 @@ const Login = ({ handleLoginHeader }) => {
 
     }
 
-    
-
     const handleGoogleSignUp = async (credentialResponse) => {
         try {
             const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
-            console.log(credentialResponse.credential)
-
             if (response.status === 200) {
-                console.log('Auth Token: ', response.credential);
-
-                // If the login is successful, store the returned token in localStorage
                 localStorage.setItem('authToken', response.data.token)
-
-                // Then redirect to profile page
                 navigate('/profile')
             }
         } catch (error) {

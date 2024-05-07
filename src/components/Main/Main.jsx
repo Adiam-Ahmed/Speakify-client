@@ -49,11 +49,7 @@ const Main = ({ userId }) => {
                 userInput: userInput.trim(),
                 userId: userId
             });
-
-
-
             const responseData = response.data.botResponse
-            console.log(responseData)
             setBotResponse(responseData);
             // Update user input immediately
             setChatData(prevChatData => [
