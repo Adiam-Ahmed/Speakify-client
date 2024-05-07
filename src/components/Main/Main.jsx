@@ -7,9 +7,6 @@ import MicIcon from '@mui/icons-material/Mic';
 const URL_BASE = process.env.REACT_APP_SERVER_URL;
 
 const Main = ({ userId }) => {
-
-    console.log(userId)
-
     const [userInput, setUserInput] = useState('');
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
