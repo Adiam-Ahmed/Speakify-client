@@ -70,7 +70,7 @@ const Main = ({ userId }) => {
                     ...prevChatData,
                     { id: generateUniqueId(), message: responseData, sender: "bot" }
                 ]);
-            }, 1000);
+            }, 300);
         } catch (error) {
             console.error('Error processing request:', error);
         }

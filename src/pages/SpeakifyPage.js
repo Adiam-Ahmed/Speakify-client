@@ -9,14 +9,13 @@ const SpeakifyPage = () => {
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
 
+
     const generateUniqueId = () => {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     };
     const handleTranscriptUpdate = (newTranscript) => {
         setTranscript(newTranscript);
     };
-    console.log(transcript)
-
 
     useEffect(() => {
         const fetchBotResponse = async () => {
@@ -28,7 +27,6 @@ const SpeakifyPage = () => {
                 console.log(response)
                 const responseData = response.data.feedback
                 setBotResponse(responseData);
-                // Update user input immediately
                 setChatData(prevChatData => [
                     ...prevChatData,
                     { id: generateUniqueId(), message: transcript, sender: "user" }
@@ -50,11 +48,8 @@ const SpeakifyPage = () => {
         fetchBotResponse()
     }, [transcript])
 
-    console.log(botResponse)
-
-
     return (
-        <div>
+        <div className= "min-h-[79vh]">
             <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link>
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">Feeling Confident, Talk to me about what you just learnt?</h2>
@@ -69,6 +64,15 @@ const SpeakifyPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="border border-gray-300 rounded-lg p-4 max-w-2xl mx-auto">
+                {chatData.map(item => (
+                    <div key={generateUniqueId()}>
+                        <div className={`chat-bubble mt-3 mb-3 ${item.sender === 'bot' ? 'bot' : 'user'}`}>
+                            {item.sender}: {item.message}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

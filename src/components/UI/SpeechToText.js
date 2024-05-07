@@ -5,6 +5,7 @@ import StopIcon from '@mui/icons-material/Stop';
 const SpeechToText = ({ onTranscriptUpdate }) => {
     const recognitionInstance = useRef(new window.webkitSpeechRecognition());
     const [isRecording, setIsRecording] = useState(false);
+    const [speechTranscript, setSpeechTranscript] = useState("")
 
     useEffect(() => {
         const recognition = recognitionInstance.current;
@@ -15,6 +16,7 @@ const SpeechToText = ({ onTranscriptUpdate }) => {
                 .map((result) => result[0].transcript)
                 .join('');
             onTranscriptUpdate(interimTranscript);
+            setSpeechTranscript(speechTranscript)
         };
         return () => {
             recognition.stop();
@@ -31,6 +33,7 @@ const SpeechToText = ({ onTranscriptUpdate }) => {
         setIsRecording(false);
     };
 
+    
     return (
         <div>
             {isRecording ? <div>Currently recording</div> : null}
@@ -38,7 +41,7 @@ const SpeechToText = ({ onTranscriptUpdate }) => {
                 <div className="flex items-center w-full max-w-2xl">
                     <div className="relative w-full">
                         <div className="border border-primary rounded-lg p-4 max-w-2xl mx-auto m-4">
-
+                            {speechTranscript}
                         </div>
                         <div
                             className="absolute inset-y-0 right-2 flex items-center pl-3"
