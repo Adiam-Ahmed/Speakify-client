@@ -1,0 +1,25 @@
+// tablet and desktop screen breakpoints
+$tablet-width: 768px;
+$desktop-width: 1280px;
+
+// colors 
+$primary-dark-color: #1A4D2E;
+$primary-light-color: #4F6F52;
+
+
+//
+$secondary-dark-color: #E8DFCA;
+$secondary-light-color: #F5EFE6;
+
+// border-radius
+$border-radius: 1.25rem;
+
+//page-oboder-radius
+$page-border-radius: 0.1875rem;
+
+//desktop container max-width
+$desktop-container-width: 63.75rem;
+
+// paddings of the page on different screen sizes
+$page-padding-mobile: 1rem;
+$page-padding-tablet: 2rem;
