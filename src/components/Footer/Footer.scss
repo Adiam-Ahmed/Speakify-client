@@ -1,10 +1,9 @@
 .footer{
     display: flex;
     justify-content: center;
-    width: 100%;
-    background-color: #0C0C0C;
     width: 100vw;
     justify-content: center;
+    max-width: 150rem;
 &__icon{
     width: 3rem;
 }

@@ -7,9 +7,6 @@ import MicIcon from '@mui/icons-material/Mic';
 const URL_BASE = process.env.REACT_APP_SERVER_URL;
 
 const Main = ({ userId }) => {
-
-    console.log(userId)
-
     const [userInput, setUserInput] = useState('');
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
@@ -19,7 +16,7 @@ const Main = ({ userId }) => {
 
     const generateUniqueId = () => {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }; 
+    };
 
     useEffect(() => {
         const fetchBooksList = async () => {
@@ -49,11 +46,7 @@ const Main = ({ userId }) => {
                 userInput: userInput.trim(),
                 userId: userId
             });
-            
-
-
             const responseData = response.data.botResponse
-            console.log(responseData)
             setBotResponse(responseData);
             // Update user input immediately
             setChatData(prevChatData => [
@@ -70,13 +63,13 @@ const Main = ({ userId }) => {
                     ...prevChatData,
                     { id: generateUniqueId(), message: responseData, sender: "bot" }
                 ]);
-            }, 1000);
+            }, 300);
         } catch (error) {
             console.error('Error processing request:', error);
         }
     };
 
-    
+
 
     const handleSubmit = async () => {
         fetchBotResponse();
@@ -84,7 +77,7 @@ const Main = ({ userId }) => {
     };
     return (
         <div>
-            <Drawer booklist={booksListData}/>
+            <Drawer booklist={booksListData} />
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">What do you want to learn about today?</h2>
                 <div className="flex items-center w-full max-w-2xl">
@@ -108,13 +101,13 @@ const Main = ({ userId }) => {
                         className="ml-2"
                         style={{ cursor: 'pointer' }}
                         onClick={handleSubmit}
-                    
+
                     >
                         <ArrowForwardIosIcon />
                     </div>
-                    
+
                 </div>
-               
+
             </div>
 
             {/* Container for rendering chat data */}

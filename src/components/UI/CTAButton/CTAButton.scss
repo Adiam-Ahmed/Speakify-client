@@ -29,9 +29,10 @@
     &__hero{
         background-color: #f4efdb;
         color: black;
-        width: 20rem;
+        width: 25rem;
+        margin: 1rem 0;
         padding: 1rem 2rem;
-        height: 3.125rem;
+        height: 4rem;
         
         @include tablet {
             &:hover {

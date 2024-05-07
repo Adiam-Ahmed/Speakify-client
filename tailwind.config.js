@@ -12,5 +12,8 @@ module.exports = {
     require('autoprefixer'),
     require('daisyui'),
   ],
+  daisyui: {
+    themes: ['light', 'night'],
+  },
 }
 

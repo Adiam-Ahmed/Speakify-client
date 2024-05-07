@@ -9,10 +9,7 @@ import axios from 'axios';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
-
-const Login = () => {
-
-    
+const Login = ({ handleLoginHeader }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -27,15 +24,13 @@ const Login = () => {
             const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
 
             if (loginRes.status === 200) {
-                console.log('Auth Token: ', loginRes.data.token);
-
-                // If the login is successful, store the returned token in localStorage
                 localStorage.setItem('authToken', loginRes.data.token)
-
-                // Then redirect to profile page
+                handleLoginHeader()
                 navigate('/profile')
+                
             } else {
                 navigate('/login')
+                
             }
         } catch (err) {
             navigate('/login')
@@ -46,17 +41,10 @@ const Login = () => {
     const handleGoogleSignUp = async (credentialResponse) => {
         try {
             const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
-            console.log(credentialResponse.credential)
-
             if (response.status === 200) {
-                console.log('Auth Token: ', response.credential);
-
-                // If the login is successful, store the returned token in localStorage
                 localStorage.setItem('authToken', response.data.token)
-
-                // Then redirect to profile page
                 navigate('/profile')
-            } 
+            }
         } catch (error) {
             console.error('Error sending data to backend:', error);
         }
@@ -64,7 +52,7 @@ const Login = () => {
 
 
     return (
-        <section className="login">
+        <section className="login glass">
             <h1 className="login__header">User Login</h1>
             <form onSubmit={handleLogin}>
                 <div className="login__container">
@@ -105,7 +93,7 @@ const Login = () => {
                     />
                 </div>
             </form>
-            <p>No account? Sign Up <Link to='/signup'>here</Link> or login using Google Account</p>
+            <p className='login__paragraph'>No account? Sign Up <span className='login__bold-primary'><Link to='/signup'>here</Link></span> or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
                     onSuccess={handleGoogleSignUp}
@@ -115,6 +103,8 @@ const Login = () => {
                     cookiePolicy={'single_host_origin'}
                 />
             </div>
+           
+
         </section>
     )
 }

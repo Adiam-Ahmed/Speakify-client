@@ -14,7 +14,6 @@
     position: relative;
     margin: .625rem;
     padding: 1.25rem;
-    background-color: wheat;
     border: 2px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -26,7 +25,6 @@
     &__front-side,
     &__back-side {
         overflow: hidden;
-        background-color: whitesmoke;
         height: 90%;
         width: 95%;
         backface-visibility: hidden;
@@ -37,9 +35,14 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        color: black;
     }
     &__back-side {
+        background-color: lightblue;
         transform: rotateX(-180deg);
+    }
+    &__front-side {
+        background-color: lightyellow;
     }
 
 }

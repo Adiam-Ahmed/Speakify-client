@@ -150,7 +150,7 @@ const Register = () => {
                     <CTAButton className="button-add" text="signup" btnType="hero" onClick={handleSignup} />
                 </div>
             </form>
-            <p>Already have Account? Login in <Link to='/login'>here</Link> or Sign up using Google</p>
+            <p className='login__paragraph'>Already have Account? Login in <span className='login__bold-primary'><Link to='/login'>here</Link> </span>or Sign up using Google</p>
             <GoogleLogin
                 onSuccess={handleGoogleSignUp}
                 onError={() => {
