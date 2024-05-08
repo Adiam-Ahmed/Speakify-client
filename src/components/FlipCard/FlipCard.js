@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FlipCard.scss';
-import placeholder from '../../assests/images/27002.jpg';
 import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
 const ACESS_KEY = process.env.REACT_APP_ACESS_KEY 

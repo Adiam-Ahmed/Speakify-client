@@ -43,10 +43,8 @@ const Register = () => {
 
                 if (loginRes.status === 200) {
                     console.log('Auth Token: ', loginRes.data.token);
-
                     // If the login is successful, store the returned token in localStorage
                     localStorage.setItem('authToken', loginRes.data.token)
-
                     // Then redirect to profile page
                     navigate('/profile')
                 } else {
@@ -150,14 +148,16 @@ const Register = () => {
                     <CTAButton className="button-add" text="signup" btnType="hero" onClick={handleSignup} />
                 </div>
             </form>
-            <p className='login__paragraph'>Already have Account? Login in <span className='login__bold-primary'><Link to='/login'>here</Link> </span>or Sign up using Google</p>
-            <GoogleLogin
-                onSuccess={handleGoogleSignUp}
-                onError={() => {
-                    console.log('Login Failed')
-                }}
-                cookiePolicy={'single_host_origin'}
-            />
+            <p className='login__paragraph'>Already have Account? Login in <span className='login__bold-primary text-primary'><Link to='/login'>here</Link> </span>or Sign up using Google</p>
+            <div className="sign-in-google">
+                <GoogleLogin
+                    onSuccess={handleGoogleSignUp}
+                    onError={() => {
+                        console.log('Login Failed')
+                    }}
+                    cookiePolicy={'single_host_origin'}
+                />
+            </div>
         </section>
     )
 };

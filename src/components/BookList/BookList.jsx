@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Books = ({booklist}) => {
+const BookList = ({booklist}) => {
     return (
         <div>
             <div className="collapse bg-base-200">
@@ -33,4 +33,4 @@ const Books = ({booklist}) => {
     );
 };
 
-export default Books;
+export default BookList;

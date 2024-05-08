@@ -21,7 +21,7 @@ const SpeechToText = ({ onTranscriptUpdate }) => {
         return () => {
             recognition.stop();
         };
-    }, [onTranscriptUpdate]);
+    }, [onTranscriptUpdate, speechTranscript]);
 
     const startRecording = () => {
         recognitionInstance.current.start();

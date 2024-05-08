@@ -93,7 +93,7 @@ const Login = ({ handleLoginHeader }) => {
                     />
                 </div>
             </form>
-            <p className='login__paragraph'>No account? Sign Up <span className='login__bold-primary'><Link to='/signup'>here</Link></span> or login using Google Account</p>
+            <p className='login__paragraph'>No account? Sign Up <span className='login__bold-primary text-primary'><Link to='/signup'>here</Link></span> or login using Google Account</p>
             <div className="sign-in-google">
                 <GoogleLogin
                     onSuccess={handleGoogleSignUp}

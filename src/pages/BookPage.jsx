@@ -62,7 +62,10 @@ const BookPage = () => {
                 <h2 className="text-3xl capitalize py-4">Flash Cards</h2>
             </div>
             <div className="divider divider-primary w-80 mx-auto"></div>
-            <Carousel flashCardDetail={ flashCardDetail} />
+            <div className="flex flex-col w-full mx-4 py-4 px-6">
+                <Carousel flashCardDetail={flashCardDetail} />
+            </div>
+
         </div>
     );
 };

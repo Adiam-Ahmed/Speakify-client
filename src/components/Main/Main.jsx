@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '../UI/Drawer';
-import MicIcon from '@mui/icons-material/Mic';
 
 const URL_BASE = process.env.REACT_APP_SERVER_URL;
 
@@ -30,7 +29,7 @@ const Main = ({ userId }) => {
             setIsFetching(false);
         }
         fetchBooksList();
-    }, [botResponse])
+    }, [userId,botResponse])
 
     // if fetching data, display loading message
     if (isFetching) {
@@ -47,23 +46,20 @@ const Main = ({ userId }) => {
                 userId: userId
             });
             const responseData = response.data.botResponse
-            setBotResponse(responseData);
-            // Update user input immediately
+
+            // Update user input 
             setChatData(prevChatData => [
                 ...prevChatData,
                 { id: generateUniqueId(), message: userInput, sender: "user" }
             ]);
 
-            // Delay bot response for 3 seconds
             setTimeout(() => {
                 setBotResponse(responseData);
-
-                // Update chat data after bot response
                 setChatData(prevChatData => [
                     ...prevChatData,
                     { id: generateUniqueId(), message: responseData, sender: "bot" }
                 ]);
-            }, 300);
+            }, 200);
         } catch (error) {
             console.error('Error processing request:', error);
         }
@@ -88,20 +84,17 @@ const Main = ({ userId }) => {
                             className="input input-bordered input-primary input-lg w-full"
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                         />
-                        <div
-                            className="absolute inset-y-0 right-2 flex items-center pr-3"
-                            style={{ cursor: 'pointer' }}
-                            onClick={handleSubmit}
-                        >
-                            <MicIcon style={{ pointerEvents: 'auto' }} />
-                        </div>
                     </div>
                     <div
                         className="ml-2"
                         style={{ cursor: 'pointer' }}
                         onClick={handleSubmit}
-
                     >
                         <ArrowForwardIosIcon />
                     </div>

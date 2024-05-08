@@ -16,12 +16,20 @@ const clientId = process.env.REACT_APP_ClientID;
 function App() {
   const [theme, setTheme] = useState('light');
   const [loginTimestamp, setLoginTimestamp] = useState(null);
+  const [userId, setUserId] = useState(); 
 
 
   const handleLoginHeader = () => {
     const newTimestamp = Date.now();
     setLoginTimestamp(newTimestamp);
   };
+
+  // const handleUserInfoLoaded = (id) => {
+  //   setUserId(id); 
+  // }
+
+
+
 
   useEffect(() => {
     const newThemeData = JSON.parse(localStorage.getItem('newThemeLocalStorage'))
@@ -31,7 +39,7 @@ function App() {
   }, [theme]);
 
   const handleThemeToggle = () => {
-    const newTheme = theme === 'light' ? 'night' : 'light';
+    const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
 
     localStorage.setItem('newThemeLocalStorage', JSON.stringify(newTheme))
@@ -42,10 +50,10 @@ function App() {
         <Header loginTimestamp={loginTimestamp} handleThemeToggle={handleThemeToggle} theme ={theme}/>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader} /></GoogleOAuthProvider>} />
-          <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register /></GoogleOAuthProvider>} />
-          <Route path='/profile' element={< Profile />} />
-          <Route path='/profile/speakify' element={<SpeakifyPage />} />
+          <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader}  /></GoogleOAuthProvider>} />
+          <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register/></GoogleOAuthProvider>} />
+          <Route path='/profile' element={<Profile  />} />
+          <Route path='/profile/speakify' element={<SpeakifyPage  />} />
           <Route path="/profile/book/:bookId" element={<BookPage />} />
         </Routes>
         <Footer />

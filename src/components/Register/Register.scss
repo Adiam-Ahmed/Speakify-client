@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    min-height: 78vh;
+    max-height: 80vh;
    
 &__header{
     font-size: 2.5rem;
@@ -23,7 +23,7 @@
     padding: 0.5rem 1rem;
     display: inline-flex;
     align-items: center;
-    border: none;
+    border: #7469B6 2px solid;
     height: 4rem;
     justify-content: center;
     font-weight: 600;
@@ -31,7 +31,6 @@
     font-style: normal;
     white-space: nowrap;
     font-size: 0.8125rem;
-    background-color: #f4efdb;
 }
 &__paragraph {
     padding: 0.5rem 0;

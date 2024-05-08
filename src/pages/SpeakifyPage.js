@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import SpeechToText from '../components/UI/SpeechToText';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import SelectSaveNote from '../components/SelectSaveNote';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-const SpeakifyPage = () => {
 
+
+const SpeakifyPage = () => {
+    const [userId, setUserId] = useState('');
     const [transcript, setTranscript] = useState('');
     const [botResponse, setBotResponse] = useState('');
     const [chatData, setChatData] = useState([]);
+    const [booksList, setBooksList] = useState([]);
+    const [selectedBook, setSelectedBook] = useState('');
 
 
     const generateUniqueId = () => {
@@ -17,14 +22,29 @@ const SpeakifyPage = () => {
         setTranscript(newTranscript);
     };
 
+    const handleSelectedBook = (selectedBook) => {
+        setSelectedBook(selectedBook);
+    };
+
+
+    const bookId = booksList.find(book => book.title === selectedBook)?.id;
+
     useEffect(() => {
+        const storedUserId = localStorage.getItem('userId');
+        if (storedUserId) {
+            setUserId(storedUserId);
+        }
         const fetchBotResponse = async () => {
             try {
+
+                const Bookresponse = await axios.get(`${SERVER_URL}/profile/book/title/${userId}`);
+                setBooksList(Bookresponse.data)
+
                 const response = await axios.post(`${SERVER_URL}/profile/check/user/understanding`, {
                     transcript: transcript,
+                    book_id: bookId,
 
                 });
-                console.log(response)
                 const responseData = response.data.feedback
                 setBotResponse(responseData);
                 setChatData(prevChatData => [
@@ -39,18 +59,26 @@ const SpeakifyPage = () => {
                         ...prevChatData,
                         { id: generateUniqueId(), message: responseData, sender: "bot" }
                     ]);
-                }, 300);
+                }, 50);
             } catch (error) {
                 console.error('Error processing request:', error);
             }
 
         }
+
+
         fetchBotResponse()
-    }, [transcript])
+    }, [transcript, userId, bookId])
+
+
 
     return (
-        <div className= "min-h-[79vh]">
-            <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link>
+
+        <div className="min-h-[79vh]">
+            <div className="flex flex-row justify-between items-center" >
+                <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link>
+                <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} />
+            </div>
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">Feeling Confident, Talk to me about what you just learnt?</h2>
                 <h3>The Stage is all yours</h3>
@@ -75,6 +103,9 @@ const SpeakifyPage = () => {
                 ))}
             </div>
         </div>
+
+
+
     );
 };
 
