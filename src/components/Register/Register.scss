@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    min-height: 78vh;
+    max-height: 100vh;
    
 &__header{
     font-size: 2.5rem;
@@ -16,6 +16,7 @@
     align-items: center;
     margin: 1.25rem 0;
 }
+
 &__input{
     border-radius: $border-radius;
     border: none;
@@ -23,7 +24,7 @@
     padding: 0.5rem 1rem;
     display: inline-flex;
     align-items: center;
-    border: none;
+    border: #7469B6 2px solid;
     height: 4rem;
     justify-content: center;
     font-weight: 600;
@@ -31,7 +32,22 @@
     font-style: normal;
     white-space: nowrap;
     font-size: 0.8125rem;
-    background-color: #f4efdb;
+}
+&__error-border {
+    border-radius: $border-radius;
+    border: none;
+    width: 23rem;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    border: red 2px solid;
+    height: 4rem;
+    justify-content: center;
+    font-weight: 600;
+    line-height: 1.375rem;
+    font-style: normal;
+    white-space: nowrap;
+    font-size: 0.8125rem;
 }
 &__paragraph {
     padding: 0.5rem 0;
@@ -42,4 +58,8 @@
     color: #7469B6;
 }
 }
-
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 4px;
+}

@@ -22,6 +22,7 @@ const Profile = () => {
                     // console.log('Profile Data: ', getProfRes.data);
                     setUserInfo(getProfRes.data);
                     setIsLoading(false);
+                    localStorage.setItem('userId', getProfRes.data.id);
                 } else {
                     handleLogout();
                 }
@@ -47,13 +48,9 @@ const Profile = () => {
     if (isLoading) return <h1>Loading...</h1>
 
     return (
-
         <main className='main-container'>
-        
             <Main userId={userInfo.id} />
         </main>
-            
-
     )
 }
 

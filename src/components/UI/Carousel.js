@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FlipCard from '../FlipCard/FlipCard';
 
-const Carousel = ({ flashCardDetail }) => {
+const Carousel = ({ flashCardDetail, bookTitle }) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     const handlePrev = () => {
@@ -21,7 +21,7 @@ const Carousel = ({ flashCardDetail }) => {
         <div className="carousel">
             <div className="carousel-item relative w-full flex justify-center">
                 <div className="w-full flex justify-center">
-                    <FlipCard flashCard={flashCardDetail[currentCardIndex]} />
+                    <FlipCard bookTitle={bookTitle} flashCard={flashCardDetail[currentCardIndex]} />
                 </div>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                     <button onClick={handlePrev} className="btn btn-circle">❮</button>

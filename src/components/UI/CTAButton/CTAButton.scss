@@ -31,12 +31,12 @@
         color: black;
         width: 25rem;
         margin: 1rem 0;
-        padding: 1rem 2rem;
+        padding: 1rem 1rem;
         height: 4rem;
         
         @include tablet {
             &:hover {
-                background-color: olivedrab;
+                background-color: #7678ed;
                 }
         }
 

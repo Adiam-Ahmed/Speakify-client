@@ -9,7 +9,7 @@ const Hero = () => {
         <section className="hero-banner">
             <div className="hero-banner__content">
                 <h2 className="hero-banner__slogan">
-                    Learn through Conversation
+                    Learn Differently
                 </h2>
                 <p className="hero-banner__details">
                     In a conversation, ideas are exchanged, perspectives are shared, and questions are raised, fostering a deeper understanding of the topic at hand.
