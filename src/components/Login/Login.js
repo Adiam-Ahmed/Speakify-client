@@ -12,30 +12,55 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 const Login = ({ handleLoginHeader }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [fieldErrors, setFieldErrors] = useState({})
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+    });
     const navigate = useNavigate()
+
+    const validateForm = () => {
+        const errors = {}
+
+        if (!formData.username.trim()) {
+            errors.username = "username is required"
+        }
+        if (!formData.password.trim()) {
+            errors.password = "password is required"
+        }
+        setFieldErrors(errors)
+
+        console.log(errors)
+
+        return errors
+    }
 
     const handleUsernameChange = (e) => setUsername(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
     const handleLogin = async e => {
         e.preventDefault()
+        const isValid = validateForm();
 
-        try {
-            const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
+        if (isValid) {
 
-            if (loginRes.status === 200) {
-                localStorage.setItem('authToken', loginRes.data.token)
-                handleLoginHeader()
-                navigate('/profile')
-                
-            } else {
-                navigate('/login')
-                
+            try {
+                const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
+
+                if (loginRes.status === 200) {
+                    localStorage.setItem('authToken', loginRes.data.token);
+                    handleLoginHeader();
+                    navigate('/profile');
+                }
+            } catch (err) {
+                if (err.response && err.response.status === 404) {
+                    console.log("User not found");
+                } else {
+                    console.error("Login failed:", err);
+                    navigate('/login');
+                }
             }
-        } catch (err) {
-            navigate('/login')
         }
-
     }
 
     const handleGoogleSignUp = async (credentialResponse) => {
@@ -53,7 +78,7 @@ const Login = ({ handleLoginHeader }) => {
 
 
     return (
-        <section className="login glass">
+        <section className="login">
             <h1 className="login__header">User Login</h1>
             <form onSubmit={handleLogin}>
                 <div className="login__container">
@@ -67,9 +92,10 @@ const Login = ({ handleLoginHeader }) => {
                             placeholder="Username"
                             value={username}
                             onChange={handleUsernameChange}
-                            required
                         />
+                        {fieldErrors.username && <p className="error-message">{fieldErrors.username}</p>}
                     </label>
+                    
                 </div>
                 <div className="login__container">
                     <LockOpenIcon sx={{ fontSize: 35 }} />
@@ -82,8 +108,8 @@ const Login = ({ handleLoginHeader }) => {
                             placeholder="Password"
                             value={password}
                             onChange={handlePasswordChange}
-                            required
                         />
+                        {fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
                     </label>
                 </div>
                 <div className="login__container">
@@ -104,7 +130,7 @@ const Login = ({ handleLoginHeader }) => {
                     cookiePolicy={'single_host_origin'}
                 />
             </div>
-           
+
 
         </section>
     )

@@ -115,7 +115,7 @@ const Register = () => {
                                 /> {/* Input for username */}
                                 
                             </div>
-                            <ErrorMessage name="username" component="div" className="error error-message" />{/* Error message for username */}
+                            <ErrorMessage name="username" component="div" className="error-message" />{/* Error message for username */}
                             {/* Name Field */}
                             <div className='signup__container'>
                                 <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
@@ -127,7 +127,7 @@ const Register = () => {
                                 /> {/* Input for name */}
                                
                             </div>
-                            <ErrorMessage name="name" component="div" className="error error-message" /> {/* Error message for name */}
+                            <ErrorMessage name="name" component="div" className=" error-message" /> {/* Error message for name */}
                             {/* Email Field */}
                             <div className='signup__container'>
                                 <AlternateEmailOutlinedIcon sx={{ fontSize: 35 }} />
@@ -139,7 +139,7 @@ const Register = () => {
                                 /> {/* Input for email */}
                                 
                             </div>
-                            <ErrorMessage name="email" component="div" className="error error-message" /> {/* Error message for email */}
+                            <ErrorMessage name="email" component="div" className="error-message" /> {/* Error message for email */}
                             {/* Password Field */}
                             <div className='signup__container'>
                                 <LockOpenIcon sx={{ fontSize: 35 }} />
@@ -151,7 +151,7 @@ const Register = () => {
                                 /> {/* Input for Password */}
                                 
                             </div>
-                            <ErrorMessage name="password" component="div" className="error error-message" /> {/* Error message for Password */}
+                            <ErrorMessage name="password" component="div" className="error-message" /> {/* Error message for Password */}
                             {/* Confirm password Field */}
                             <div className='signup__container'>
                                 <LockOutlinedIcon sx={{ fontSize: 35 }} />
@@ -163,7 +163,7 @@ const Register = () => {
                                 /> {/* Input for Confirm password */}
                                 
                             </div>
-                            <ErrorMessage name="confirmPassword" component="div" className="error error-message" /> {/* Error message for Confirm password */}
+                            <ErrorMessage name="confirmPassword" component="div" className="error-message" /> {/* Error message for Confirm password */}
                             <div className='signup__container'>
                                 <CTAButton className="button-add" text="signup" btnType="hero" type="submit" disabled={isSubmitting} />
                             </div>
