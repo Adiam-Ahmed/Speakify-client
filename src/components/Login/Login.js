@@ -43,6 +43,7 @@ const Login = ({ handleLoginHeader }) => {
             const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
             if (response.status === 200) {
                 localStorage.setItem('authToken', response.data.token)
+                handleLoginHeader()
                 navigate('/profile')
             }
         } catch (error) {

@@ -16,19 +16,12 @@ const clientId = process.env.REACT_APP_ClientID;
 function App() {
   const [theme, setTheme] = useState('light');
   const [loginTimestamp, setLoginTimestamp] = useState(null);
-  const [userId, setUserId] = useState(); 
 
 
   const handleLoginHeader = () => {
     const newTimestamp = Date.now();
     setLoginTimestamp(newTimestamp);
   };
-
-  // const handleUserInfoLoaded = (id) => {
-  //   setUserId(id); 
-  // }
-
-
 
 
   useEffect(() => {

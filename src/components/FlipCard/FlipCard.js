@@ -5,7 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
 const ACESS_KEY = process.env.REACT_APP_ACESS_KEY 
 
-const FlipCard = ({ flashCard }) => {
+const FlipCard = ({ flashCard, bookTitle }) => {
     const [image , setImage] = useState()
     const [answerImage, setAnswerImage] = useState()
 
@@ -13,7 +13,8 @@ const FlipCard = ({ flashCard }) => {
 
         const getImage = async () => {
             try {
-                const getImageQuestionData = await axios.get(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(flashCard.question)}&client_id=${ACESS_KEY}&per_page=1$`);
+         
+                const getImageQuestionData = await axios.get(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(bookTitle)}&client_id=${ACESS_KEY}&per_page=1$`);
                 const getImageAnswerData = await axios.get(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(flashCard.answer)}&client_id=${ACESS_KEY}&per_page=1$`);
                 
                 const answerImage = getImageAnswerData.data.results[0].urls.small

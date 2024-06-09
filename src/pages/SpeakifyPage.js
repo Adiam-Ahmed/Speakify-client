@@ -3,6 +3,7 @@ import SpeechToText from '../components/UI/SpeechToText';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import SelectSaveNote from '../components/SelectSaveNote';
+import Drawer from '../components/UI/Drawer';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
@@ -68,7 +69,7 @@ const SpeakifyPage = () => {
 
 
         fetchBotResponse()
-    }, [transcript, userId, bookId])
+    }, [transcript])
 
 
 
@@ -76,11 +77,12 @@ const SpeakifyPage = () => {
 
         <div className="min-h-[79vh]">
             <div className="flex flex-row justify-between items-center" >
-                <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link>
+                {/* <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link> */}
+                <Drawer booklist={booksList} />
                 <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} />
             </div>
             <div className="flex flex-col items-center justify-center w-full p-4">
-                <h2 className="mb-4">Feeling Confident, Talk to me about what you just learnt?</h2>
+                <h2 className="mb-4">Feeling Confident, Talk to me about what you just learned?</h2>
                 <h3>The Stage is all yours</h3>
             </div>
             <SpeechToText onTranscriptUpdate={handleTranscriptUpdate} />
@@ -93,7 +95,7 @@ const SpeakifyPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="border border-gray-300 rounded-lg p-4 max-w-2xl mx-auto">
+            <div className="border border-gray-300 rounded-lg p-4 mb-4 max-w-2xl mx-auto">
                 {chatData.map(item => (
                     <div key={generateUniqueId()}>
                         <div className={`chat-bubble mt-3 mb-3 ${item.sender === 'bot' ? 'bot' : 'user'}`}>

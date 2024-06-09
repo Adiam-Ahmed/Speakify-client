@@ -62,7 +62,7 @@ const Header = ({ loginTimestamp, handleThemeToggle, theme }) => {
                 <div className="flex justify-end flex-1 px-2">
                     
                     {isLoggedIn ? (
-                        <p>Welcome, {userInfo.username}!</p>
+                        <p className='user-welcome-color'>Welcome,{userInfo.username}!</p>
                     ) : (
                         <></>
                     )}

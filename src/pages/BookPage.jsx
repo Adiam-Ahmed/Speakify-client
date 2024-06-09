@@ -63,7 +63,7 @@ const BookPage = () => {
             </div>
             <div className="divider divider-primary w-80 mx-auto"></div>
             <div className="flex flex-col w-full mx-4 py-4 px-6">
-                <Carousel flashCardDetail={flashCardDetail} />
+                <Carousel bookTitle={bookDetail.title} flashCardDetail={flashCardDetail} />
             </div>
 
         </div>
