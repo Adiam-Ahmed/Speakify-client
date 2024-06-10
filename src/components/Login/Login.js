@@ -10,13 +10,12 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 const Login = ({ handleLoginHeader }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [fieldErrors, setFieldErrors] = useState({})
+    
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
+    const [fieldErrors, setFieldErrors] = useState({})
     const navigate = useNavigate()
 
     const validateForm = () => {
@@ -32,20 +31,26 @@ const Login = ({ handleLoginHeader }) => {
 
         console.log(errors)
 
-        return errors
+        // Return true if no errors
+        return Object.keys(errors).length === 0;
     }
 
-    const handleUsernameChange = (e) => setUsername(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value,
+        }));
+    };
 
-    const handleLogin = async e => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        const isValid = validateForm();
-
-        if (isValid) {
-
+        if (validateForm()) {
             try {
-                const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
+                const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { 
+                    username: formData.username,
+                    password: formData.password,
+                 });
 
                 if (loginRes.status === 200) {
                     localStorage.setItem('authToken', loginRes.data.token);
@@ -54,11 +59,17 @@ const Login = ({ handleLoginHeader }) => {
                 }
             } catch (err) {
                 if (err.response && err.response.status === 404) {
-                    console.log("User not found");
+                    setFieldErrors(prevErrors => ({
+                        ...prevErrors,
+                        general: "User not found",
+                    }));
                 } else {
-                    console.error("Login failed:", err);
-                    navigate('/login');
+                    setFieldErrors(prevErrors => ({
+                        ...prevErrors,
+                        general: "Login failed. Please try again.",
+                    }));
                 }
+                console.error("Login failed:", err);
             }
         }
     }
@@ -91,10 +102,10 @@ const Login = ({ handleLoginHeader }) => {
                                         className="login__input"
                                         type="text"
                                         id="login_username"
-                                        name="user_name"
+                                        name="username"
                                         placeholder="Username"
-                                        value={username}
-                                        onChange={handleUsernameChange}
+                                        value={formData.username}
+                                        onChange={handleChange}
                                     />
                                     {fieldErrors.username && <p className="error-message">{fieldErrors.username}</p>}
                                 </label>
@@ -109,8 +120,8 @@ const Login = ({ handleLoginHeader }) => {
                                         id="login_password"
                                         name="password"
                                         placeholder="Password"
-                                        value={password}
-                                        onChange={handlePasswordChange}
+                                        value={formData.password}
+                                        onChange={handleChange}
                                     />
                                     {fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
                                 </label>
