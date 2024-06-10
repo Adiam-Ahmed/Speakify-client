@@ -11,6 +11,7 @@ const Main = ({ userId }) => {
     const [chatData, setChatData] = useState([]);
     const [booksListData, setBooksList] = useState([]);
     const [isFetching, setIsFetching] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const generateUniqueId = () => {
@@ -29,7 +30,7 @@ const Main = ({ userId }) => {
             setIsFetching(false);
         }
         fetchBooksList();
-    }, [userId,botResponse])
+    }, [userId, botResponse])
 
     // if fetching data, display loading message
     if (isFetching) {
@@ -38,38 +39,71 @@ const Main = ({ userId }) => {
         )
     }
 
+    const fetchBotResponse = async (userInput) => {
+        let loadInterval;
 
-    const fetchBotResponse = async () => {
+        // Add loading indicator to chat data
+        setChatData(prevChatData => [
+            ...prevChatData,
+            { id: generateUniqueId(), message: '...', sender: 'bot' }
+        ]);
+
         try {
+            // Show loader
+            setIsLoading(true);
+
+            loadInterval = setInterval(() => {
+                setChatData(prevChatData => {
+                    const lastMessage = prevChatData[prevChatData.length - 1];
+                    if (lastMessage.sender === 'bot' && lastMessage.message === '...') {
+                        lastMessage.message = lastMessage.message.length < 3 ? lastMessage.message + '.' : '.';
+                        return [...prevChatData];
+                    }
+                    return prevChatData;
+                });
+            }, 400);
+
+
             const response = await axios.post(`${URL_BASE}/profile/learn`, {
                 userInput: userInput.trim(),
                 userId: userId
             });
-            const responseData = response.data.botResponse
+            const responseData = response.data.botResponse;
 
-            // Update user input 
+            // Clear loader
+            clearInterval(loadInterval);
+            setIsLoading(false);
+
+            // Replace loading indicator with actual response
             setChatData(prevChatData => [
-                ...prevChatData,
-                { id: generateUniqueId(), message: userInput, sender: "user" }
-            ]);
+                ...prevChatData.slice(0, -1), // Remove the last loading indicator
 
-            setTimeout(() => {
-                setBotResponse(responseData);
-                setChatData(prevChatData => [
-                    ...prevChatData,
-                    { id: generateUniqueId(), message: responseData, sender: "bot" }
-                ]);
-            }, 200);
+                { id: generateUniqueId(), message: responseData, sender: 'bot' }
+            ]);
         } catch (error) {
             console.error('Error processing request:', error);
+            clearInterval(loadInterval);
+            setIsLoading(false);
         }
     };
 
 
-
     const handleSubmit = async () => {
-        fetchBotResponse();
-        setUserInput("")
+        if (userInput.trim()) {
+            const newUserMessage = { id: generateUniqueId(), message: userInput, sender: "user" };
+
+            // Update chat data with user input immediately
+            setChatData(prevChatData => [
+                ...prevChatData,
+                newUserMessage
+            ]);
+
+            // Clear user input
+            setUserInput("");
+
+            // Fetch bot response
+            fetchBotResponse(userInput);
+        }
     };
     return (
         <div>
@@ -106,6 +140,7 @@ const Main = ({ userId }) => {
             {/* Container for rendering chat data */}
             <div className="border border-gray-300 rounded-lg p-4 max-w-2xl mx-auto">
                 {chatData.map(item => (
+
                     <div key={generateUniqueId()}>
                         <div className={`chat-bubble mt-3 mb-3 ${item.sender === 'bot' ? 'bot' : 'user'}`}>
                             {item.sender}: {item.message}
