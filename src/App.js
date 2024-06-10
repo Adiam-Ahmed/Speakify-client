@@ -44,7 +44,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<GoogleOAuthProvider clientId={clientId}><Login handleLoginHeader={handleLoginHeader}  /></GoogleOAuthProvider>} />
-          <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register/></GoogleOAuthProvider>} />
+          <Route path='/signup' element={<GoogleOAuthProvider clientId={clientId}><Register handleLoginHeader={handleLoginHeader} /></GoogleOAuthProvider>} />
           <Route path='/profile' element={<Profile  />} />
           <Route path='/profile/speakify' element={<SpeakifyPage  />} />
           <Route path="/profile/book/:bookId" element={<BookPage />} />

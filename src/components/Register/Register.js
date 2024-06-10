@@ -13,7 +13,7 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 
-const Register = () => {
+const Register = ({handleLoginHeader}) => {
 
     const [fieldErrors, setFieldErrors] = useState({})
 
@@ -50,8 +50,10 @@ const Register = () => {
             const response = await axios.post(`${SERVER_URL}/auth/googleSignUp`, { credentialResponse });
 
             if (response.status === 200) {
+                localStorage.setItem('authToken', response.data.token)
+                handleLoginHeader()
                 navigate('/profile')
-                console.log('Data sent to backend successfully');
+       
             }
         } catch (error) {
             console.error('Error sending data to backend:', error);
@@ -84,9 +86,9 @@ const Register = () => {
                             const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
 
                             if (loginRes.status === 200) {
-                                console.log('Auth Token: ', loginRes.data.token);
                                 // If the login is successful, store the returned token in localStorage
                                 localStorage.setItem('authToken', loginRes.data.token)
+                                handleLoginHeader()
                                 // Then redirect to profile page
                                 navigate('/profile')
                             } else {
