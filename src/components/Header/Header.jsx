@@ -57,7 +57,12 @@ const Header = ({ loginTimestamp, handleThemeToggle, theme }) => {
                         alt='logo'
                         className='header__icon'
                     />
-                    <h3 className="text-lg font-bold" href='logo'>SPEAKIFY</h3>
+                    {isLoggedIn ? (
+                        <h3 className="text-lg font-bold" href='logo'>SPEAKIFY</h3>
+                    ) : (
+                            <Link to= '/'> <h3 className="text-lg font-bold" href='logo'>SPEAKIFY</h3></Link>   
+                    )}
+                    
                 </div>
                 <div className="flex justify-end flex-1 px-2">
                     

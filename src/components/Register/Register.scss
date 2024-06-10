@@ -5,11 +5,13 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
-    max-height: 100vh;
+    min-height: 80vh;
+
    
 &__header{
     font-size: 2.5rem;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
 }
 &__container{
     display: flex;
@@ -24,7 +26,7 @@
     padding: 0.5rem 1rem;
     display: inline-flex;
     align-items: center;
-    border: #7469B6 2px solid;
+    border: #7678ed 2px solid;
     height: 4rem;
     justify-content: center;
     font-weight: 600;

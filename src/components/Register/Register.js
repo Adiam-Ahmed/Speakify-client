@@ -19,7 +19,7 @@ const Register = () => {
 
     const validateForm = (values) => {
         const errors = {}
-        if (!values.username || values.username.length < 3 ) {
+        if (!values.username || values.username.length < 3) {
             errors.username = 'Username must be at least 3 character';
         }
         if (!values.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -28,10 +28,10 @@ const Register = () => {
         if (!values.name || values.name.length < 3) {
             errors.name = 'Name must be at least 3 character';
         }
-        if (!values.password || values.password.length < 6 ) {
+        if (!values.password || values.password.length < 6) {
             errors.password = 'Password must be at least 6 characters';
         }
-        
+
         if (!values.confirmPassword || values.confirmPassword !== values.password) {
             errors.confirmPassword = 'Passwords must match';
         }
@@ -81,7 +81,7 @@ const Register = () => {
                         });
 
                         if (signUpRes.status === 201) {
-                            const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username , password });
+                            const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { username, password });
 
                             if (loginRes.status === 200) {
                                 console.log('Auth Token: ', loginRes.data.token);
@@ -105,84 +105,90 @@ const Register = () => {
                         <section className='signup'>
                             <h1 className='signup__header'> User Sign Up</h1>
                             {/* Username Field */}
-                            <div className='signup__container'>
-                                <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
-                                <Field
-                                    type="text"
-                                    name="username"
-                                    placeholder='Username'
-                                    className={touched.username && fieldErrors.username ? 'signup__error-border' : 'signup__input'}
-                                /> {/* Input for username */}
-                                
-                            </div>
-                            <ErrorMessage name="username" component="div" className="error-message" />{/* Error message for username */}
-                            {/* Name Field */}
-                            <div className='signup__container'>
-                                <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
-                                <Field
-                                    type="text"
-                                    name="name"
-                                    placeholder='Name'
-                                    className={touched.name && fieldErrors.name ? 'signup__error-border' : 'signup__input'}
-                                /> {/* Input for name */}
-                               
-                            </div>
-                            <ErrorMessage name="name" component="div" className=" error-message" /> {/* Error message for name */}
-                            {/* Email Field */}
-                            <div className='signup__container'>
-                                <AlternateEmailOutlinedIcon sx={{ fontSize: 35 }} />
-                                <Field
-                                    type="email"
-                                    name="email"
-                                    placeholder='Email'
-                                    className={touched.email && fieldErrors.email ? 'signup__error-border' : 'signup__input'}
-                                /> {/* Input for email */}
-                                
-                            </div>
-                            <ErrorMessage name="email" component="div" className="error-message" /> {/* Error message for email */}
-                            {/* Password Field */}
-                            <div className='signup__container'>
-                                <LockOpenIcon sx={{ fontSize: 35 }} />
-                                <Field
-                                    type="password"
-                                    name="password"
-                                    placeholder='Password'
-                                    className={touched.password && fieldErrors.password ? 'signup__error-border' : 'signup__input'}
-                                /> {/* Input for Password */}
-                                
-                            </div>
-                            <ErrorMessage name="password" component="div" className="error-message" /> {/* Error message for Password */}
-                            {/* Confirm password Field */}
-                            <div className='signup__container'>
-                                <LockOutlinedIcon sx={{ fontSize: 35 }} />
-                                <Field
-                                    type="password"
-                                    name="confirmPassword"
-                                    placeholder='Confirm Password'
-                                    className={touched.confirmPassword && fieldErrors.confirmPassword ? 'signup__error-border' : 'signup__input'}
-                                /> {/* Input for Confirm password */}
-                                
-                            </div>
-                            <ErrorMessage name="confirmPassword" component="div" className="error-message" /> {/* Error message for Confirm password */}
-                            <div className='signup__container'>
-                                <CTAButton className="button-add" text="signup" btnType="hero" type="submit" disabled={isSubmitting} />
-                            </div>
-                            <p className='login__paragraph'>Already have Account? Login in <span className='login__bold-primary text-primary'><Link to='/login'>here</Link> </span>or Sign up using Google</p>
-                            <div className="sign-in-google">
-                                <GoogleLogin
-                                    onSuccess={handleGoogleSignUp}
-                                    onError={() => {
-                                        console.log('Login Failed')
-                                    }}
-                                    cookiePolicy={'single_host_origin'}
-                                />
-                            </div>
-                            
+                            <div className="flex flex-col w-full lg:flex-row  justify-center ">
+                                <section className='col-one'>
+                                    <div className='signup__container'>
+                                        <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
+                                        <Field
+                                            type="text"
+                                            name="username"
+                                            placeholder='Username'
+                                            className={touched.username && fieldErrors.username ? 'signup__error-border' : 'signup__input'}
+                                        /> {/* Input for username */}
 
+                                    </div>
+                                    <ErrorMessage name="username" component="div" className="error-message" />{/* Error message for username */}
+                                    {/* Name Field */}
+                                    <div className='signup__container'>
+                                        <AccountCircleRoundedIcon sx={{ fontSize: 35 }} />
+                                        <Field
+                                            type="text"
+                                            name="name"
+                                            placeholder='Name'
+                                            className={touched.name && fieldErrors.name ? 'signup__error-border' : 'signup__input'}
+                                        /> {/* Input for name */}
+
+                                    </div>
+                                    <ErrorMessage name="name" component="div" className=" error-message" /> {/* Error message for name */}
+                                    {/* Email Field */}
+                                    <div className='signup__container'>
+                                        <AlternateEmailOutlinedIcon sx={{ fontSize: 35 }} />
+                                        <Field
+                                            type="email"
+                                            name="email"
+                                            placeholder='Email'
+                                            className={touched.email && fieldErrors.email ? 'signup__error-border' : 'signup__input'}
+                                        /> {/* Input for email */}
+
+                                    </div>
+                                    <ErrorMessage name="email" component="div" className="error-message" /> {/* Error message for email */}
+                                    {/* Password Field */}
+                                    <div className='signup__container'>
+                                        <LockOpenIcon sx={{ fontSize: 35 }} />
+                                        <Field
+                                            type="password"
+                                            name="password"
+                                            placeholder='Password'
+                                            className={touched.password && fieldErrors.password ? 'signup__error-border' : 'signup__input'}
+                                        /> {/* Input for Password */}
+
+                                    </div>
+                                    <ErrorMessage name="password" component="div" className="error-message" /> {/* Error message for Password */}
+                                    {/* Confirm password Field */}
+                                    <div className='signup__container'>
+                                        <LockOutlinedIcon sx={{ fontSize: 35 }} />
+                                        <Field
+                                            type="password"
+                                            name="confirmPassword"
+                                            placeholder='Confirm Password'
+                                            className={touched.confirmPassword && fieldErrors.confirmPassword ? 'signup__error-border' : 'signup__input'}
+                                        /> {/* Input for Confirm password */}
+
+                                    </div>
+                                    <ErrorMessage name="confirmPassword" component="div" className="error-message" /> {/* Error message for Confirm password */}
+                                    <div className='signup__container'>
+                                        <CTAButton className="button-add" text="signup" btnType="hero" type="submit" disabled={isSubmitting} />
+                                    </div>
+                                </section>
+                                <div className="divider divider-primary lg:divider-horizontal my-4 lg:mx-4"></div>
+                                <section className='col-two flex flex-col justify-evenly gap-15'>
+                                    <p className='login__paragraph'>Already have an Account? <br/> Login in <span className='login__bold-primary text-primary'><Link to='/login'>here</Link> </span>or Sign up using Google</p>
+                                    <div className="sign-in-google px-4">
+                                        <GoogleLogin
+                                            onSuccess={handleGoogleSignUp}
+                                            onError={() => {
+                                                console.log('Login Failed')
+                                            }}
+                                            cookiePolicy={'single_host_origin'}
+                                        />
+                                    </div>
+                                </section>
+
+                            </div>
                         </section>
                     </Form>
                 )}
-                
+
             </Formik>
 
         </>
