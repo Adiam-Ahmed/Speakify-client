@@ -79,7 +79,7 @@ const SpeakifyPage = () => {
             <div className="flex flex-row justify-between items-center" >
                 {/* <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link> */}
                 <Drawer booklist={booksList} />
-                <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} />
+                {/* <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} /> */}
             </div>
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">Feeling Confident, Talk to me about what you just learned?</h2>
