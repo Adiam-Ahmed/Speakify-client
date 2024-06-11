@@ -13,39 +13,42 @@ const Main = ({ userId }) => {
     const [isFetching, setIsFetching] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-
     const generateUniqueId = () => {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     };
 
-    useEffect(() => {
-        const fetchBooksList = async () => {
-            setIsFetching(true);
-            try {
-                const response = await axios.get(`${URL_BASE}/profile/book/${userId}`);
-                setBooksList(response.data);
-            } catch (err) {
-                console.log('Cannot get book data');
-            }
-            setIsFetching(false);
-        }
-        fetchBooksList();
-    }, [userId, botResponse])
 
-    // if fetching data, display loading message
+    const fetchBooksList = async (userId) => {
+        setIsFetching(true);
+        try {
+            const response = await axios.get(`${URL_BASE}/profile/book/${userId}`);
+            setBooksList(response.data);
+        } catch (err) {
+            console.log('Cannot get book data');
+        }
+        setIsFetching(false);
+    };
+
+    useEffect(() => {
+        fetchBooksList(userId);
+    }, [userId, botResponse]);
+
     if (isFetching) {
         return (
             <p>... Loading book data ...</p>
-        )
+        );
     }
 
     const fetchBotResponse = async (userInput) => {
         let loadInterval;
 
+        // Create a unique ID for this response
+        const messageId = generateUniqueId();
+
         // Add loading indicator to chat data
         setChatData(prevChatData => [
             ...prevChatData,
-            { id: generateUniqueId(), message: '...', sender: 'bot' }
+            { id: messageId, message: '...', sender: 'bot' }
         ]);
 
         try {
@@ -55,38 +58,63 @@ const Main = ({ userId }) => {
             loadInterval = setInterval(() => {
                 setChatData(prevChatData => {
                     const lastMessage = prevChatData[prevChatData.length - 1];
-                    if (lastMessage.sender === 'bot' && lastMessage.message === '...') {
-                        lastMessage.message = lastMessage.message.length < 3 ? lastMessage.message + '.' : '.';
-                        return [...prevChatData];
+                    if (lastMessage.sender === 'bot' && lastMessage.message.endsWith('....')) {
+                        lastMessage.message = '.';
+                    } else if (lastMessage.sender === 'bot') {
+                        lastMessage.message += '.';
                     }
-                    return prevChatData;
+                    return [...prevChatData];
                 });
             }, 400);
-
 
             const response = await axios.post(`${URL_BASE}/profile/learn`, {
                 userInput: userInput.trim(),
                 userId: userId
             });
             const responseData = response.data.botResponse;
+            setBotResponse(responseData);
 
             // Clear loader
             clearInterval(loadInterval);
             setIsLoading(false);
 
-            // Replace loading indicator with actual response
-            setChatData(prevChatData => [
-                ...prevChatData.slice(0, -1), // Remove the last loading indicator
+            // Typing effect
+            const typeText = (text, callback) => {
+                let index = 0;
+                const interval = setInterval(() => {
+                    if (index < text.length) {
+                        callback(text.substring(0, index + 1));
+                        index++;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 20); 
+            };
 
-                { id: generateUniqueId(), message: responseData, sender: 'bot' }
-            ]);
+            typeText(responseData, (partialText) => {
+                setChatData(prevChatData => {
+                    const updatedChatData = [...prevChatData];
+                    const botMessageIndex = updatedChatData.findIndex(msg => msg.id === messageId);
+                    if (botMessageIndex !== -1) {
+                        updatedChatData[botMessageIndex] = {
+                            ...updatedChatData[botMessageIndex],
+                            message: partialText
+                        };
+                    }
+                    return updatedChatData;
+                });
+            });
+
         } catch (error) {
             console.error('Error processing request:', error);
             clearInterval(loadInterval);
             setIsLoading(false);
+            setChatData(prevChatData => [
+                ...prevChatData.slice(0, -1), // Remove the last loading indicator
+                { id: generateUniqueId(), message: 'Sorry, something went wrong.', sender: 'bot' }
+            ]);
         }
     };
-
 
     const handleSubmit = async () => {
         if (userInput.trim()) {
@@ -103,8 +131,10 @@ const Main = ({ userId }) => {
 
             // Fetch bot response
             fetchBotResponse(userInput);
+    
         }
     };
+
     return (
         <div>
             <Drawer booklist={booksListData} />
@@ -132,16 +162,13 @@ const Main = ({ userId }) => {
                     >
                         <ArrowForwardIosIcon />
                     </div>
-
                 </div>
-
             </div>
 
             {/* Container for rendering chat data */}
             <div className="border border-gray-300 rounded-lg p-4 max-w-2xl mx-auto">
                 {chatData.map(item => (
-
-                    <div key={generateUniqueId()}>
+                    <div key={item.id}>
                         <div className={`chat-bubble mt-3 mb-3 ${item.sender === 'bot' ? 'bot' : 'user'}`}>
                             {item.sender}: {item.message}
                         </div>
