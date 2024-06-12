@@ -53,5 +53,6 @@
   "devDependencies": {
     "daisyui": "^4.10.3",
     "prettier": "3.2.5"
-  }
+  },
+  "proxy": "https://speakify-server-2.onrender.com"
 }
