@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SpeechToText from '../components/UI/SpeechToText';
 import axios from 'axios';
-// import SelectSaveNote from '../components/SelectSaveNote';
-// import { Link } from 'react-router-dom'
+import SelectSaveNote from '../components/SelectSaveNote';
+import { Link } from 'react-router-dom'
 import Drawer from '../components/UI/Drawer';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -23,10 +23,9 @@ const SpeakifyPage = () => {
         setTranscript(newTranscript);
     };
 
-    const handleSelectedBook = (selectedBook) => {
-        setSelectedBook(selectedBook);
+    const handleSelectedBook = (event) => {
+        setSelectedBook(event.target.value);
     };
-
 
     const bookId = booksList.find(book => book.title === selectedBook)?.id;
 
@@ -58,7 +57,7 @@ const SpeakifyPage = () => {
 
                     setChatData(prevChatData => [
                         ...prevChatData,
-                        { id: generateUniqueId(), message: responseData, sender: "bot" }
+                        { id: generateUniqueId(), message: botResponse, sender: "bot" }
                     ]);
                 }, 50);
             } catch (error) {
@@ -69,7 +68,7 @@ const SpeakifyPage = () => {
 
 
         fetchBotResponse()
-    }, [transcript, bookId, userId])
+    }, [transcript, bookId, userId, botResponse])
 
 
 
@@ -77,9 +76,9 @@ const SpeakifyPage = () => {
 
         <div className="min-h-[79vh]">
             <div className="flex flex-row justify-between items-center" >
-                {/* <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link> */}
+                <Link to='/profile'><button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg btn-primary btn-active">Back to DashBoard </button></Link>
                 <Drawer booklist={booksList} />
-                {/* <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} /> */}
+                <SelectSaveNote booksList={booksList} onSelectBook={handleSelectedBook} />
             </div>
             <div className="flex flex-col items-center justify-center w-full p-4">
                 <h2 className="mb-4">Feeling Confident, Talk to me about what you just learned?</h2>

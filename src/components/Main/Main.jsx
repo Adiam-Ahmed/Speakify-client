@@ -149,7 +149,7 @@ const Main = ({ userId }) => {
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                             onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
+                                if (e.key === 'Enter' && !isLoading) {
                                     handleSubmit();
                                 }
                             }}
