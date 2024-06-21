@@ -5,6 +5,12 @@ import axios from 'axios';
 import Main from '../Main/Main';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
+const handleLogout = (navigate) => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+}
+
+
 const Profile = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [userInfo, setUserInfo] = useState({})
@@ -36,14 +42,10 @@ const Profile = () => {
         if (authToken) {
             getUserInfo(authToken);
         }
-    }, []);
+    }, [navigate]);
 
     
 
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        navigate('/login');
-    }
 
     if (isLoading) return <h1>Loading...</h1>
 

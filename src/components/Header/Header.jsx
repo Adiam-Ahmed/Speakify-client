@@ -7,6 +7,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
+const handleLogout = (navigate, setIsLoggedIn) => {
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+    navigate('/');
+};
+
+
 const Header = ({ loginTimestamp, handleThemeToggle, theme }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState({})
@@ -39,14 +46,10 @@ const Header = ({ loginTimestamp, handleThemeToggle, theme }) => {
         if (authToken) {
             getUserInfo(authToken);
         }
-    }, [ loginTimestamp ]);
+    }, [loginTimestamp, navigate]);
 
 
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        setIsLoggedIn(false);
-        navigate('/');
-    }
+
 
     return (
         <header className='header'>

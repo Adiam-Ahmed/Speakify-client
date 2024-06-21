@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SpeechToText from '../components/UI/SpeechToText';
-import { Link } from 'react-router-dom'
 import axios from 'axios';
-import SelectSaveNote from '../components/SelectSaveNote';
+// import SelectSaveNote from '../components/SelectSaveNote';
+// import { Link } from 'react-router-dom'
 import Drawer from '../components/UI/Drawer';
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -69,7 +69,7 @@ const SpeakifyPage = () => {
 
 
         fetchBotResponse()
-    }, [transcript])
+    }, [transcript, bookId, userId])
 
 
 

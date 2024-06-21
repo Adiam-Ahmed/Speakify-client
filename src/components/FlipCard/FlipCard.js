@@ -29,7 +29,7 @@ const FlipCard = ({ flashCard, bookTitle }) => {
             
         }
         getImage()
-    },[])
+    }, [bookTitle, flashCard.answer])
 
     const [isFlipped, setIsFlipped] = useState(false);
 

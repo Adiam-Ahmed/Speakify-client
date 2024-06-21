@@ -50,7 +50,9 @@ const Login = ({ handleLoginHeader }) => {
                 const loginRes = await axios.post(`${SERVER_URL}/auth/login`, { 
                     username: formData.username,
                     password: formData.password,
-                 });
+                }, {
+                    withCredentials: true  // Ensure credentials are sent if needed
+                });
 
                 if (loginRes.status === 200) {
                     localStorage.setItem('authToken', loginRes.data.token);
